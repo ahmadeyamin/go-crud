@@ -16,6 +16,10 @@ func main() {
 		Controllers.AllUsers(db, c)
 	})
 
+	router.GET("/users/show/:id", func(c *gin.Context) {
+		Controllers.ShowUser(db, c)
+	})
+
 	router.POST("/users/create", func(c *gin.Context) {
 		Controllers.CreateUser(db, c)
 	})

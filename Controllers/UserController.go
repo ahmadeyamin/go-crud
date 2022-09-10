@@ -47,6 +47,27 @@ func AllUsers(db *gorm.DB, c *gin.Context) {
 	c.JSON(http.StatusOK, users)
 }
 
+func ShowUser(db *gorm.DB, c *gin.Context) {
+
+	id, _ := strconv.Atoi(c.Param("id"))
+	var count int64
+
+	user := Models.User{}
+	user.ID = uint(id)
+
+	db.Model(&Models.User{}).Find(&user).Count(&count)
+
+	if count == 0 {
+		c.JSON(http.StatusNotFound, gin.H{
+			"success": false,
+			"message": "User not found",
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, user)
+}
+
 func UpdateUser(db *gorm.DB, c *gin.Context) {
 
 	id, _ := strconv.Atoi(c.Param("id"))
